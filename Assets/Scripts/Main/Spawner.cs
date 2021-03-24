@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -9,7 +7,7 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating(nameof(Spawn), 0, 3f);
+        InvokeRepeating(nameof(Spawn), 0, 2f);
     }
 
     private void Spawn()
