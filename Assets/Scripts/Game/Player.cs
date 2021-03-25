@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public AudioClip biteClip;
+
     private readonly float jumpForce = 10;
 
     private new Rigidbody2D rigidbody;
     private Animator animator;
+    private AudioSource audioSource;
 
     private bool isJumping;
 
@@ -15,6 +18,7 @@ public class Player : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -46,6 +50,15 @@ public class Player : MonoBehaviour
 
             animator.SetTrigger("jump");
             rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Pickup"))
+        {
+            audioSource.clip = biteClip;
+            audioSource.Play();
         }
     }
 

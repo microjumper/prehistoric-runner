@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5426834022083686243}
   m_Layer: 0
   m_Name: PickupItem
-  m_TagString: Untagged
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   pickups:
   - {fileID: 11400000, guid: b4d7941380721fd4d927f21b30687423, type: 2}
   - {fileID: 11400000, guid: 2406005488d180b4bb2cf7f99becb21f, type: 2}
+  biteClip: {fileID: 8300000, guid: a3aad050700dcf1458cb6cf07c322de9, type: 3}
 --- !u!58 &5426834022083686242
 CircleCollider2D:
   m_ObjectHideFlags: 0
