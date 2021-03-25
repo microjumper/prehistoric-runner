@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private readonly float jumpForce = 7;
+    private readonly float jumpForce = 10;
 
     private new Rigidbody2D rigidbody;
     private Animator animator;
@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         isJumping = false;
@@ -25,13 +24,23 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        animator.SetFloat("yVelocity", rigidbody.velocity.y);
+        if(rigidbody.velocity.y < 0)
+        {
+            rigidbody.gravityScale = 3;
+        }
+
+        if(transform.position.x < 0)
+        {
+            animator.SetTrigger("hit");
+        }
     }
 
     public void OnJump()
     {
         if(!isJumping)
         {
+            rigidbody.gravityScale = 2;
+
             isJumping = true;
             animator.SetBool("isJumping", isJumping);
 
@@ -42,15 +51,29 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle") && !isJumping)
+        if (collision.gameObject.CompareTag("Obstacle"))
         {
-            animator.SetTrigger("hit");
+            if(isJumping)
+            {
+                Ground();
+            }
+            else
+            {
+                animator.SetTrigger("hit");
+            }
         }
 
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            isJumping = false;
-            animator.SetBool("isJumping", isJumping);
+            Ground();
         }
+    }
+
+    private void Ground()
+    {
+        rigidbody.gravityScale = 2;
+
+        isJumping = false;
+        animator.SetBool("isJumping", isJumping);
     }
 }
