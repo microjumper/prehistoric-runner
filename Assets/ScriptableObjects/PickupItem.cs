@@ -24,6 +24,11 @@ public class PickupItem : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.left * GameManager.GameSpeed * Time.deltaTime);
+
+        if (transform.position.x < -10)
+        {
+            Disable();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -31,11 +36,6 @@ public class PickupItem : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             GameManager.instance.UpdateScore(pickup.points);
-            Disable();
-        }
-
-        if (collision.gameObject.CompareTag("Deactivator"))
-        {
             Disable();
         }
     }
