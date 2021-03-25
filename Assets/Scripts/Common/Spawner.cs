@@ -4,10 +4,12 @@ public class Spawner : MonoBehaviour
 {
     public ObjectPool pool;
     public Transform[] spawnPoints;
+    public float time;
+    public float repeatRate;
 
     void Start()
     {
-        InvokeRepeating(nameof(Spawn), 0, 2f);
+        InvokeRepeating(nameof(Spawn), time, repeatRate);
     }
 
     private void Spawn()

@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
 
     private bool isJumping;
 
-
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
