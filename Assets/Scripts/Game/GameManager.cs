@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public ScorePanel scorePanel;
 
     public static GameManager instance;
-    public static float GameSpeed { get; private set; } = 2.5f;
+    public static float GameSpeed { get; private set; } = 3f;
 
     private int score;
 
@@ -39,11 +39,11 @@ public class GameManager : MonoBehaviour
         scorePanel.ScoreToSprite(score);
     }
 
-    private IEnumerator IncreaseSpeed() // increment speed every 20 seconds
+    private IEnumerator IncreaseSpeed()
     {
         yield return new WaitForSeconds(5f);
 
-        GameSpeed += 0.5f;
+        GameSpeed += 1;
 
         StartCoroutine(IncreaseSpeed());
     }
