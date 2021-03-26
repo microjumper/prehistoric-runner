@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public ScorePanel scorePanel;
+    public GameObject gameOverPanel;
 
     public static GameManager instance;
-    public static float GameSpeed { get; private set; } = 3f;
+    public static float GameSpeed { get; private set; }
+    public static bool IsGameOver { get; private set; }
 
     private int score;
 
@@ -22,29 +25,48 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        IsGameOver = false;
         score = 0;
 
-        StartCoroutine(IncreaseSpeed());
-    }
+        Time.timeScale = 1;
+        GameSpeed = 3f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        StartCoroutine(IncreaseSpeed());
     }
 
     public void UpdateScore(int points)
     {
-        score += points;
-        scorePanel.ScoreToSprite(score);
+        if(!IsGameOver)
+        {
+            score += points;
+            scorePanel.ScoreToSprite(score);
+        }
     }
 
     private IEnumerator IncreaseSpeed()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
 
-        GameSpeed += 1;
+        GameSpeed += 0.25f;
 
         StartCoroutine(IncreaseSpeed());
+    }
+
+    public void GameOver()
+    {
+        IsGameOver = true;
+
+        StartCoroutine(Reload());
+
+        Camera.main.gameObject.GetComponent<AudioSource>().pitch = 0.5f;
+        Time.timeScale = 0.25f;
+
+        gameOverPanel.SetActive(true);
+    }
+
+    private IEnumerator Reload()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("Game");
     }
 }

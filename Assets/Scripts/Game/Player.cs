@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
         if(transform.position.x < 0)
         {
             animator.SetTrigger("hit");
+            GameManager.instance.GameOver();
         }
     }
 
@@ -55,7 +56,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Pickup"))
+        if (collision.gameObject.CompareTag("Pickup") && !GameManager.IsGameOver)
         {
             audioSource.clip = biteClip;
             audioSource.Play();
@@ -73,6 +74,7 @@ public class Player : MonoBehaviour
             else
             {
                 animator.SetTrigger("hit");
+                GameManager.instance.GameOver();
             }
         }
 
